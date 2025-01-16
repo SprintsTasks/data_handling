@@ -1,12 +1,11 @@
-# data_handling
-
-A new Flutter project.
+# Data Handling From API
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
+#### Employee page is an implementation that displays a list of employees. It fetches data from a API request. The page also includes functionality for pull-to-refresh using the RefreshIndicator widget.
+## packages:
+#### Dartz to handle different multiple response success or error
+#### DIO to dealing with api http request.
 
 - [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
 - [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
