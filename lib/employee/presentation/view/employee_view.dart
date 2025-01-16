@@ -19,6 +19,7 @@ class _EmployeeViewState extends State<EmployeeView> {
   Future<void> fetchData() async {
     // handle states of request
     requestState = StatesOfRequest.loading;
+    setState(() {});
     // call repo method that call api request
     final result = await emplyoeeRepImp.getEmployeeData();
     result.fold((list) {
