@@ -1,5 +1,6 @@
 import 'package:data_handling/core/constants.dart';
 import 'package:data_handling/employee/data/model/employee_model.dart';
+import 'package:data_handling/employee/presentation/view/widgets/details_view.dart';
 import 'package:data_handling/employee/presentation/view/widgets/employee_item.dart';
 import 'package:flutter/material.dart';
 
@@ -40,7 +41,15 @@ class EmployeeBody extends StatelessWidget {
                 child: ListView.builder(
                     itemBuilder: (context, index) {
                       return EmployeeItem(
-                          key: Key('$index'), model: emoloyeeList[index]);
+                          navTo: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => EmployeeDetailsView(
+                                        model: emoloyeeList[index])));
+                          },
+                          key: Key('$index'),
+                          model: emoloyeeList[index]);
                     },
                     itemCount: emoloyeeList.length),
               )),

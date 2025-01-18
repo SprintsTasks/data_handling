@@ -1,7 +1,9 @@
 import 'package:data_handling/core/constants.dart';
+import 'package:data_handling/employee/data/data_sources/employee_local_data_source.dart';
+import 'package:data_handling/employee/data/data_sources/employee_remote_data_source.dart';
 import 'package:data_handling/employee/data/model/employee_model.dart';
 import 'package:data_handling/employee/data/repos/emplyoee_repo.dart';
-import 'package:data_handling/employee/presentation/view/employee_body.dart';
+import 'package:data_handling/employee/presentation/view/widgets/employee_body.dart';
 import 'package:flutter/material.dart';
 
 class EmployeeView extends StatefulWidget {
@@ -13,7 +15,9 @@ class EmployeeView extends StatefulWidget {
 
 class _EmployeeViewState extends State<EmployeeView> {
   StatesOfRequest requestState = StatesOfRequest.loading;
-  final emplyoeeRepImp = EmplyoeeRepoImpl();
+  final emplyoeeRepImp = EmplyoeeRepImp(
+      employeeLocalDataSource: EmployeeLocalDataSourceImp(),
+      employeeRemotDataSource: EmplyoeeRepoRemoteImpl());
   List<EmployeeModel> emoloyeeList = [];
   String errorMessage = '';
   Future<void> fetchData() async {
@@ -39,7 +43,6 @@ class _EmployeeViewState extends State<EmployeeView> {
 
   @override
   void initState() {
-    // apply in init state to be called at first building
     fetchData();
     super.initState();
   }

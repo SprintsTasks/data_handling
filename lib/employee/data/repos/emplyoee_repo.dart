@@ -1,31 +1,29 @@
 import 'package:dartz/dartz.dart';
-import 'package:data_handling/core/functions/api_serivce.dart';
+import 'package:data_handling/employee/data/data_sources/employee_local_data_source.dart';
+import 'package:data_handling/employee/data/data_sources/employee_remote_data_source.dart';
 import 'package:data_handling/employee/data/model/employee_model.dart';
 
 abstract class EmplyoeeRepo {
   Future<Either<List<EmployeeModel>, String>> getEmployeeData();
 }
 
-class EmplyoeeRepoImpl implements EmplyoeeRepo {
-  final ApiService apiService = ApiService();
+class EmplyoeeRepImp implements EmplyoeeRepo {
+  final EmployeeLocalDataSource employeeLocalDataSource;
+  final EmplyoeeRepoRemoteDataSource employeeRemotDataSource;
+  EmplyoeeRepImp(
+      {required this.employeeLocalDataSource,
+      required this.employeeRemotDataSource});
   @override
   Future<Either<List<EmployeeModel>, String>> getEmployeeData() async {
     try {
-      // call api service to get data
-      final result = await apiService.fetchData();
-      List<EmployeeModel> employeeList = [];
-      // incase status code is 200 which mean there is no error
-      if (result.statusCode == 200) {
-        for (var item in result.data) {
-          employeeList.add(EmployeeModel.fromJson(item));
-        }
-
-        return left(employeeList);
+      List<EmployeeModel> list = [];
+      list = await employeeLocalDataSource.getEmployeeData();
+      if (list.isEmpty) {
+        list = await employeeRemotDataSource.getEmployeeData();
+        await employeeLocalDataSource.setEmployeeData(list);
       }
-      //incase error happen from server
-      return right("error in code ${result.data}");
+      return left(list);
     } catch (e) {
-      // incase error from parsing
       return right(e.toString());
     }
   }

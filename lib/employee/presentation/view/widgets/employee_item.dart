@@ -2,8 +2,9 @@ import 'package:data_handling/employee/data/model/employee_model.dart';
 import 'package:flutter/material.dart';
 
 class EmployeeItem extends StatelessWidget {
-  const EmployeeItem({super.key, required this.model});
+  const EmployeeItem({super.key, required this.model, required this.navTo});
   final EmployeeModel model;
+  final void Function()navTo;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -34,7 +35,7 @@ class EmployeeItem extends StatelessWidget {
           subtitle:
               model.salary != null ? Text('${model.salary! * 1000} \$') : null,
           trailing: IconButton(
-              onPressed: null, icon: Icon(Icons.arrow_forward_ios_rounded)),
+              onPressed: navTo, icon: Icon(Icons.arrow_forward_ios_rounded)),
         ));
   }
 }
